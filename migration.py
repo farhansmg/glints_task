@@ -21,7 +21,7 @@ def insertToTarget():
     target.insert_rows(table="sales", rows=cursor)
 
 with DAG(**dag_params) as dag:
-    create_pet_table = PostgresOperator(
+    create_sales_table = PostgresOperator(
         task_id="create_sales_table",
         postgres_conn_id="database_y",
         sql="""
@@ -34,4 +34,4 @@ with DAG(**dag_params) as dag:
 
     task_load_target = PythonOperator(task_id = 'load_target', python_callable=insertToTarget)
 
-    create_pet_table >> task_load_target
+    create_sales_table >> task_load_target
